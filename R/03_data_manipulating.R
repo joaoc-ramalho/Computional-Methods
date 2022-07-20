@@ -29,15 +29,13 @@ files_path
 
 # The `files_path` object is a vector of five elements (after all, there are five files) containing the full name of the file. Let's use the contents of this vector in the `read.csv()` function. We will use the a loop to read all data at once.
 file_names <- gsub(".csv", "", basename(files_path), fixed = TRUE)
+
 for (i in 1:length(files_path)) {
   data <- read.csv(files_path[[i]])
   assign(file_names[i], data)
 }
 # the assingn() function is used to assign something for a name
-# in the same manner as " <- ", but the assign function is used
-# inside of loops
-
-#the upstream structure wil
+# in the same manner as " <- ", but the assign function is used inside the loop
 
 
 # Let's apply the `head()`, `dim()` and `summary()` functions to inspect all files. Try to understand based on the output and the help page (e.g.: `?head`) what each of the functions returns.
