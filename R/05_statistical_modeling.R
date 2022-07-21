@@ -158,7 +158,7 @@ dnorm(1, 0, 1)
 
 #Least Squares method -> strategy to try to find the curve ( linear ) that fits
 #our data. It will start in a point named fulcrum, which its the mean Xaxis x the
-#mean of Yaxis. Then, R will make a lot of lines passing throught the fulcum and
+#mean of Yaxis. Then, R will make a lot of lines passing throught the fulcrum and
 # calculates the distance from the line to our data. The line with smallest
 #distance will be choosed as ous model.
 # it can be done by the ln() function (linear model)
