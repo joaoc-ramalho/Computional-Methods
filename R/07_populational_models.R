@@ -68,9 +68,52 @@ ggplot(df_lv) +
 
 # NON-ECOLOGY MODELS
 
-install.packages("dplyr")
+library(dplyr)
 library(ggplot2)
 library(lubridate)
 library(zoo)
 
 covid <- read.csv("data/raw/covid19-dd7bc8e57412439098d9b25129ae6f35.csv")
+
+# First checking the class
+class(covid$date)
+
+# Changing to date format
+covid$date <- as_date(covid$date)
+# Checking the class
+class(covid$date)
+
+# Now we can make numeric operations
+range(covid$date)
+
+ggplot(covid) +
+  geom_line(aes(x = date, y = new_confirmed)) +
+  theme_minimal()
+
+# when loading the name of the full data base as the argument in ggplot(), like
+# ggplot(data), when using the aes() we can just tell which column of our data
+#base we want to be in each axis, like aes(x = colum_name, y = column_name)
+
+# the graph showed to us negative confirmed new cases, inidicatind errors in our
+#data base. To correct thet, we will turn every negative observation of
+#"new_confirmed" column in zero
+covid$new_confirmed[covid$new_confirmed < 0] <- 0
+
+#and then trying to plot again
+ggplot(covid) +
+  geom_line(aes(x = date, y = new_confirmed)) +
+  theme_minimal() +
+  labs(x = "Date", y = "New cases")
+
+# Calculating the Rolling Mean
+
+covid$roll_mean <- zoo::rollmean(covid$new_confirmed, 14, fill = NA)
+
+ggplot(covid) +
+  geom_line(aes(x = date, y = new_confirmed), col = "black") +
+  # col dentro do aes() separa as cores por grupo. Para só pintas deve-se colocar fora
+  geom_line(aes(x = date, y = roll_mean), col = "red", size = 1.2) +
+  theme_minimal() +
+  labs(x = "Date", y = "New cases")
+
+----- Why it isnt woking?
